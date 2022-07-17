@@ -6,6 +6,8 @@ import pl.coderslab.entity.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class ArticleDao {
@@ -19,6 +21,18 @@ public class ArticleDao {
 
     public Article findById(long id){
         return entityManager.find(Article.class, id);
+    }
+
+    public List<Article> findAll(){
+        Query query = entityManager.createQuery("SELECT a FROM Article a");
+        return query.getResultList();
+
+    }
+
+    public List<Article> getLast5Articles(){
+        Query query = entityManager.createQuery("SELECT a FROM Article a ORDER BY a.id DESC ");
+        query.setMaxResults(5);
+        return query.getResultList();
     }
 
     public void update(Article article) {
