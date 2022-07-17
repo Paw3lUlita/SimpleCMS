@@ -32,4 +32,17 @@ public class Article {
     public void preUpdate() {
         updated = LocalDateTime.now();
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+
+
+                ", content='" + content + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
+    }
 }
