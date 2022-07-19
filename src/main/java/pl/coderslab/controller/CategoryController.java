@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoryController {
 
-CategoryDao categoryDao;
+     private final CategoryDao categoryDao;
 
     public CategoryController(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
@@ -30,8 +30,8 @@ CategoryDao categoryDao;
     }
 
     @GetMapping("/add")
-    public String showAddForm(Category category, Model model ){
-         category = new Category();
+    public String showAddForm( Model model ){
+         Category category = new Category();
          model.addAttribute("category", category);
         return "/category/add";
     }
@@ -43,8 +43,8 @@ CategoryDao categoryDao;
     }
 
     @GetMapping("/edit")
-    public String showEditForm(Category category, Model model, @RequestParam long categoryId){
-        category = categoryDao.findById(categoryId);
+    public String showEditForm(Model model, @RequestParam long categoryId){
+        Category category = categoryDao.findById(categoryId);
         model.addAttribute("category", category);
         return "/category/edit";
     }
