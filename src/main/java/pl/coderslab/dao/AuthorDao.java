@@ -7,9 +7,11 @@ import pl.coderslab.entity.Category;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class AuthorDao {
 
     @PersistenceContext

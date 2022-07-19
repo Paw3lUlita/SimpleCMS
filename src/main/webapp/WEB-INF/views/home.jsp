@@ -13,9 +13,9 @@
 </head>
 <body>
 <c:forEach var="article" items="${last5articles}" >
-    Tytuł: ${article} <br>
-    Data dodania: ${article} <br>
-    Zawartość: ${article} <br>
+    Tytuł: ${article.title} <br>
+    Data dodania: ${article.created} <br>
+    Zawartość: ${article.content} <br>
 </c:forEach>
 </body>
 </html>
