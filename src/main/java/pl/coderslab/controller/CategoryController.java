@@ -54,4 +54,17 @@ CategoryDao categoryDao;
         categoryDao.update(category);
         return "redirect:/categories";
     }
+
+    @GetMapping("/delete")
+    public String showDeleteAlert(@RequestParam long categoryId, Model model){
+        Category category = categoryDao.findById(categoryId);
+        model.addAttribute(category);
+        return "/category/deleteWarning";
+    }
+
+    @GetMapping("/delete/{categoryId}")
+    public String deleteCategory(@PathVariable long categoryId){
+        categoryDao.deleteById(categoryId);
+        return "redirect:/categories";
+    }
 }
