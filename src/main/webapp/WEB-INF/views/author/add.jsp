@@ -13,8 +13,8 @@
 </head>
 <body>
 <form:form method="post" modelAttribute="author">
-   Imię:  <form:input path="firstName" ></form:input><br>
-   Nazwisko:  <form:input path="lastName"></form:input>
+   Imię:  <form:input path="firstName" ></form:input><form:errors path="firstName"/><br>
+   Nazwisko:  <form:input path="lastName"></form:input><form:errors path="lastName"/>
     <input type="submit" value="Dodaj Autora">
 </form:form>
 </body>

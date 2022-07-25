@@ -1,6 +1,8 @@
 package pl.coderslab.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,12 +12,21 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Size(max = 200)
     @Column(length = 200)
+    @NotNull
     private String title;
     @ManyToOne
+    @NotNull
     private Author author;
+
     @ManyToMany(fetch = FetchType.EAGER)
+    @Size(min=1)
     private List<Category> categories;
+
+    @Size(min=50)
+    @NotNull
     private String content;
 
 

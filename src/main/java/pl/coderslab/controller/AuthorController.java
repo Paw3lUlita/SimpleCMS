@@ -2,11 +2,13 @@ package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Category;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -36,8 +38,12 @@ public class AuthorController {
         return "/author/add";
     }
 
-    @PostMapping("/add")
-    public String saveAuthor(Author author){
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String saveAuthor(@Valid Author author, BindingResult result){
+
+        if(result.hasErrors()){
+            return "/author/add";
+        }
         authorDao.save(author);
         return "redirect:/authors";
     }

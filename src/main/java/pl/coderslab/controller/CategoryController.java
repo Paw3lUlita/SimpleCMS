@@ -2,10 +2,12 @@ package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.entity.Category;
 
+import javax.validation.Valid;
 import java.awt.print.Book;
 import java.util.List;
 
@@ -37,7 +39,11 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public String saveCategory(Category category){
+    public String saveCategory(@Valid Category category, BindingResult result){
+
+        if(result.hasErrors()){
+            return "/category/add";
+        }
         categoryDao.save(category);
         return "redirect:/categories";
     }
