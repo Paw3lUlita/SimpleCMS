@@ -1,6 +1,8 @@
 package pl.coderslab.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -9,7 +11,11 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Size(min=5)
+    @NotNull
     private String name;
+
     @Column(nullable = true)
     private String description;
 
