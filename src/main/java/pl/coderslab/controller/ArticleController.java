@@ -2,10 +2,7 @@ package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.ArticleDao;
 import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.dao.CategoryDao;
@@ -63,6 +60,31 @@ public class ArticleController {
     @ModelAttribute("categories")
     public List<Category> getCategories(){
         return categoryDao.findAll();
+    }
+
+    @GetMapping("/edit")
+    public String showEditForm(Model model, @RequestParam long articleId){
+        Article article = articleDao.findById(articleId);
+        model.addAttribute("article", article);
+        return "/article/edit";
+    }
+
+    @PostMapping("/edit")
+    public String updateAuthor(Article article) {
+        articleDao.update(article);
+        return "redirect:/articles";
+    }
+    @GetMapping("/delete")
+    public String showDeleteAlert(@RequestParam long articleId, Model model){
+        Article article = articleDao.findById(articleId);
+        model.addAttribute(article);
+        return "/article/deleteWarning";
+    }
+
+    @GetMapping("/delete/{articleId}")
+    public String deleteArticle(@PathVariable long articleId){
+        articleDao.deleteById(articleId);
+        return "redirect:/articles";
     }
 }
 
