@@ -4,9 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.dao.AuthorDao;
+import pl.coderslab.service.AuthorService;
 import pl.coderslab.entity.Author;
-import pl.coderslab.entity.Category;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,10 +14,10 @@ import java.util.List;
 @RequestMapping("/authors")
 public class AuthorController {
 
-    private final AuthorDao authorDao;
+    private final AuthorService authorService;
 
-    public AuthorController(AuthorDao authorDao) {
-        this.authorDao = authorDao;
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
     }
 
     @GetMapping
@@ -28,7 +27,7 @@ public class AuthorController {
 
     @ModelAttribute("authors")
     public List<Author> getAllAuthors(){
-        return authorDao.findAll();
+        return authorService.findAll();
     }
 
     @GetMapping("/add")
@@ -44,32 +43,32 @@ public class AuthorController {
         if(result.hasErrors()){
             return "/author/add";
         }
-        authorDao.save(author);
+        authorService.save(author);
         return "redirect:/authors";
     }
 
     @GetMapping("/edit")
     public String showEditForm(Model model, @RequestParam long authorId){
-        Author author = authorDao.findById(authorId);
+        Author author = authorService.findById(authorId);
         model.addAttribute("author", author);
         return "/author/edit";
     }
 
     @PostMapping("/edit")
     public String updateAuthor(Author author) {
-        authorDao.update(author);
+        authorService.update(author);
         return "redirect:/authors";
     }
         @GetMapping("/delete")
         public String showDeleteAlert(@RequestParam long authorId, Model model){
-            Author author = authorDao.findById(authorId);
+            Author author = authorService.findById(authorId);
             model.addAttribute(author);
             return "/author/deleteWarning";
         }
 
         @GetMapping("/delete/{authorId}")
         public String deleteAuthor(@PathVariable long authorId){
-            authorDao.deleteById(authorId);
+            authorService.deleteById(authorId);
             return "redirect:/authors";
         }
 

@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.dao.ArticleDao;
-import pl.coderslab.dao.AuthorDao;
-import pl.coderslab.dao.CategoryDao;
+import pl.coderslab.service.ArticleService;
+import pl.coderslab.service.AuthorService;
+import pl.coderslab.service.CategoryService;
 import pl.coderslab.entity.Article;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Category;
@@ -19,16 +19,16 @@ import java.util.List;
 public class ArticleController {
 
 
-    private final ArticleDao articleDao;
-    private final AuthorDao authorDao;
-    private final CategoryDao categoryDao;
+    private final ArticleService articleService;
+    private final AuthorService authorService;
+    private final CategoryService categoryService;
 
 
-    public ArticleController(ArticleDao articleDao, AuthorDao authorDao, CategoryDao categoryDao) {
+    public ArticleController(ArticleService articleService, AuthorService authorService, CategoryService categoryService) {
 
-        this.articleDao = articleDao;
-        this.authorDao = authorDao;
-        this.categoryDao = categoryDao;
+        this.articleService = articleService;
+        this.authorService = authorService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -38,7 +38,7 @@ public class ArticleController {
 
     @ModelAttribute("articles")
     public List<Article> getAllArticles(){
-        return articleDao.findAll();
+        return articleService.findAll();
     }
 
     @GetMapping("/add")
@@ -55,42 +55,42 @@ public class ArticleController {
             return "/article/add";
         }
 
-        articleDao.save(article);
+        articleService.save(article);
         return "redirect:/articles";
     }
 
     @ModelAttribute("authors")
     public List<Author> getAuthors(){
-        return authorDao.findAll();
+        return authorService.findAll();
     }
 
     @ModelAttribute("categories")
     public List<Category> getCategories(){
-        return categoryDao.findAll();
+        return categoryService.findAll();
     }
 
     @GetMapping("/edit")
     public String showEditForm(Model model, @RequestParam long articleId){
-        Article article = articleDao.findById(articleId);
+        Article article = articleService.findById(articleId);
         model.addAttribute("article", article);
         return "/article/edit";
     }
 
     @PostMapping("/edit")
     public String updateAuthor(Article article) {
-        articleDao.update(article);
+        articleService.update(article);
         return "redirect:/articles";
     }
     @GetMapping("/delete")
     public String showDeleteAlert(@RequestParam long articleId, Model model){
-        Article article = articleDao.findById(articleId);
+        Article article = articleService.findById(articleId);
         model.addAttribute(article);
         return "/article/deleteWarning";
     }
 
     @GetMapping("/delete/{articleId}")
     public String deleteArticle(@PathVariable long articleId){
-        articleDao.deleteById(articleId);
+        articleService.deleteById(articleId);
         return "redirect:/articles";
     }
 }

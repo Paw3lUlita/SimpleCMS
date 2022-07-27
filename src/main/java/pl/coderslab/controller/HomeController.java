@@ -1,11 +1,9 @@
 package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.dao.ArticleDao;
+import pl.coderslab.service.ArticleService;
 import pl.coderslab.entity.Article;
 
 import java.util.List;
@@ -13,10 +11,10 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    private ArticleDao articleDao;
+    private ArticleService articleService;
 
-    public HomeController(ArticleDao articleDao) {
-        this.articleDao = articleDao;
+    public HomeController(ArticleService articleService) {
+        this.articleService = articleService;
     }
 
     @GetMapping("/")
@@ -27,6 +25,6 @@ public class HomeController {
 
     @ModelAttribute("last5articles")
     public List<Article> getLast5Articles(){
-        return articleDao.getLast5Articles();
+        return articleService.getLast5Articles();
     }
 }
