@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.entity.Article;
 import pl.coderslab.service.CategoryService;
 import pl.coderslab.entity.Category;
 
@@ -71,5 +72,17 @@ public class CategoryController {
     public String deleteCategory(@PathVariable long categoryId){
         categoryService.deleteById(categoryId);
         return "redirect:/categories";
+    }
+
+    @GetMapping("/articles-by-category/{categoryId}")
+    public String showArticlesByCategory(@PathVariable long categoryId, Model model){
+        Category category = categoryService.findById(categoryId);
+        model.addAttribute("category", category);
+        List<Article> articlesByCategory = category.getArticles();
+        model.addAttribute("articlesByCategory", articlesByCategory);
+
+
+        return "/article/articlesByCategory";
+
     }
 }

@@ -19,7 +19,7 @@ public class Category {
     @Column(nullable = true)
     private String description;
 
-     @ManyToMany
+     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
      private List<Article> articles;
 
     public List<Article> getArticles() {
