@@ -1,3 +1,3 @@
 # SimpleCMS
 Simple CMS project
-Training with Spring MVC and Hibernate
+Training with Spring MVC, Spring Data JPA and Hibernate
